@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinearAlgebra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace MathVectorCharts
         public void Add(Iris iris)
         {
             _irises.Add(iris);
+        }
+        public MathVector ArithmeticMeanVector()
+        {
+            //MathVector vector = new MathVector();
+            List<double> arithmeticMeansValues = new List<double>();
+            for (int i = 0; i < 4; i++)
+            {
+                arithmeticMeansValues.Add(ArithmeticMeanOfColumn(i));
+            }
+            MathVector vector = new MathVector(arithmeticMeansValues.ToArray());
+            return vector;
         }
         public double ArithmeticMeanOfColumn(int indexField)
         {

@@ -39,6 +39,7 @@ namespace MathVectorCharts
         {
             List<string> typesIrises = new List<string>(_logicLayer.DataSet.Irises.Select(p => p.Type));
             var barCharts = new List<Chart>();
+            var pieChart = pie_chart;
             barCharts.Add(chart_petal_length);
             barCharts.Add(chart_petal_width);
             barCharts.Add(chart_sepal_length);
@@ -58,6 +59,30 @@ namespace MathVectorCharts
                         addedSeries.Points.Add(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i));
                         addedSeries.IsValueShownAsLabel = true;
                     }
+                }
+            }
+            pieChart.Series.Clear();
+            Iris setosaMeanIris = new Iris(_logicLayer.DataSet.Irises.FirstOrDefault(p => p.Type == "setosa")?.ArithmeticMeanVector(), "setosa");
+            Iris versicolorMeanIris = new Iris(_logicLayer.DataSet.Irises.FirstOrDefault(p => p.Type == "versicolor")?.ArithmeticMeanVector(), "versicolor");
+            Iris virginicaMeanIris = new Iris(_logicLayer.DataSet.Irises.FirstOrDefault(p => p.Type == "virginica")?.ArithmeticMeanVector(), "virginica");
+
+            List<Iris> meanVectorsArray = new List<Iris>();
+            meanVectorsArray.Add(setosaMeanIris);
+            meanVectorsArray.Add(versicolorMeanIris);
+            meanVectorsArray.Add(virginicaMeanIris);
+
+            Series addedSeriesPieChart = pieChart.Series.Add("s1");
+            addedSeriesPieChart.Points.Clear();
+            addedSeriesPieChart.ChartType = SeriesChartType.Pie;
+            for (int i = 0; i < meanVectorsArray.Count; i++)
+            {
+                for (int j = i + 1; j < meanVectorsArray.Count; j++)
+                {
+                    Iris currentIrisFirst = meanVectorsArray[i];
+                    Iris currentIrisSecond = meanVectorsArray[j];
+                    double currentTwoIrisMean = currentIrisFirst.VectorParams.CalcDistance(currentIrisSecond.VectorParams);
+                    Console.WriteLine(currentTwoIrisMean);
+                    addedSeriesPieChart.Points.AddXY(currentIrisFirst.TypeIris.ToUpper() + " & " + currentIrisSecond.TypeIris.ToUpper(), currentTwoIrisMean);
                 }
             }
         }
