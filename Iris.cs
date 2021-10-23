@@ -9,27 +9,71 @@ namespace MathVectorCharts
 {
     public class Iris
     {
-        //sepal_length,sepal_width,petal_length,petal_width,
+        /// <summary>
+        /// Математический вектор, состоящий из значений параметров ириса
+        /// </summary>
         private MathVector _vectorParams;
+
+        /// <summary>
+        /// Тип ириса (Например, setosa)
+        /// </summary>
         private string _typeIris;
-        private static List<string> _nameOfParams = new List<string> { "sepal_length", "sepal_width", "petal_length", "petal_width" };
+
+        /// <summary>
+        /// Допустимые значения параметров ириса
+        /// </summary>
+        private static List<string> _possibleNameOfParams = new List<string> { "sepal_length", "sepal_width", "petal_length", "petal_width" };
+
+        /// <summary>
+        /// Допустимые типы ирисов (поле не используется)
+        /// </summary>
+        private static List<string> _possibleTypesIrises = new List<string> { "setosa", "versicolor", "virginica" };
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="vectorParams">Вектор параметров</param>
+        /// <param name="typeIris">Тип ириса</param>
         public Iris(MathVector vectorParams, string typeIris)
         {
             _vectorParams = vectorParams;
             _typeIris = typeIris;
         }
-        public static List<string> NameOfParams
+
+        /// <summary>
+        /// Допустимые значения параметров ириса (используется при проверке файла)
+        /// </summary>
+        public static List<string> PossibleNameOfParams
         { 
-            get { return _nameOfParams; }
+            get { return _possibleNameOfParams; }
         }
+
+        /// <summary>
+        /// Допустимые типы ирисов (поле не используется)
+        /// </summary>
+        public static List<string> PossibleTypesIrises
+        {
+            get {  return _possibleTypesIrises;}
+        }
+
+        /// <summary>
+        /// Свойство для получения математического вектора, состоящешо из значений параметров ириса
+        /// </summary>
         public MathVector VectorParams
         {
             get { return _vectorParams; }
         }
+
+        /// <summary>
+        /// Свойство для получения типа ириса
+        /// </summary>
         public string TypeIris
         {
             get { return _typeIris; }
         }
+
+        // Неиспользуемые свойства
+
         public double SepalLength
         {
             get { return _vectorParams[0]; }

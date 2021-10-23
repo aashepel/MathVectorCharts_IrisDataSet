@@ -54,20 +54,21 @@
   <ItemGroup>
     <Compile Include="ConcreteTypeIrisDataSet.cs" />
     <Compile Include="Exceptions\BaseMathVectorChartsException.cs" />
+    <Compile Include="Exceptions\InvalidFileContentException.cs" />
     <Compile Include="Exceptions\NotExsistFileException.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormIrisesAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormIrisesAnalysis.Designer.cs">
+      <DependentUpon>FormIrisesAnalysis.cs</DependentUpon>
     </Compile>
     <Compile Include="Iris.cs" />
     <Compile Include="IrisesDataSet.cs" />
     <Compile Include="LogicLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormIrisesAnalysis.resx">
+      <DependentUpon>FormIrisesAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

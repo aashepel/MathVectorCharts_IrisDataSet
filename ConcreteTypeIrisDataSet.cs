@@ -9,25 +9,49 @@ namespace MathVectorCharts
 {
     public class ConcreteTypeIrisDataSet
     {
-        //sepal_length,sepal_width,petal_length,petal_width
+        /// <summary>
+        /// Список ирисов ОДНОГО типа
+        /// </summary>
         private List<Iris> _irises;
+
+        /// <summary>
+        /// Конструкор
+        /// </summary>
+        /// <param name="type">Тип ириса</param>
         public ConcreteTypeIrisDataSet(string type)
         {
             _irises = new List<Iris>();
             Type = type;
         }
+
+        /// <summary>
+        /// Авто-свойство для типа ириса
+        /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// Свойство для получения списка ирисов
+        /// </summary>
         public List<Iris> Irises
         {
             get { return _irises; }
         }
+
+        /// <summary>
+        /// Метод для добавления ириса в дата-сет
+        /// </summary>
+        /// <param name="iris"></param>
         public void Add(Iris iris)
         {
             _irises.Add(iris);
         }
+
+        /// <summary>
+        /// Метод для вычисления усредненного вектора
+        /// </summary>
+        /// <returns>Усредненный математический вектор</returns>
         public MathVector ArithmeticMeanVector()
         {
-            //MathVector vector = new MathVector();
             List<double> arithmeticMeansValues = new List<double>();
             for (int i = 0; i < 4; i++)
             {
@@ -36,13 +60,19 @@ namespace MathVectorCharts
             MathVector vector = new MathVector(arithmeticMeansValues.ToArray());
             return vector;
         }
-        public double ArithmeticMeanOfColumn(int indexField)
+
+        /// <summary>
+        /// Метод для вычисления среднего арифмитического значения по определенному столбцу списка векторов
+        /// </summary>
+        /// <param name="indexColumn">Индекс столбца. Нумерация с нуля</param>
+        /// <returns>Среднее арифмитическое значение</returns>
+        public double ArithmeticMeanOfColumn(int indexColumn)
         {
             double sum = 0;
             int counter = 0;
             foreach(Iris iris in _irises)
             {
-                sum += iris.VectorParams[indexField];
+                sum += iris.VectorParams[indexColumn];
                 counter++;
             }
             return sum / counter;
