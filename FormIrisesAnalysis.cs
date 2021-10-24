@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MathVectorCharts
@@ -30,7 +32,6 @@ namespace MathVectorCharts
             _barCharts.Add(chart_sepal_width);
             ClearAllCharts();
             ResetLabelFilePath();
-            button_openGridView.Enabled = false;
         }
         /// <summary>
         /// Метод для отображения сообщения
@@ -83,6 +84,8 @@ namespace MathVectorCharts
             _logicLayer.Reset();
             ResetLabelFilePath();
             button_openGridView.Enabled = false;
+            button_openNotepad.Enabled = false;
+            button_reloadFile.Enabled = false;
         }
 
         private void button_openFile_Click(object sender, EventArgs e)
@@ -90,25 +93,33 @@ namespace MathVectorCharts
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = "Файлы csv|*.csv";
-            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.InitialDirectory = Application.StartupPath;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 _logicLayer.FilePath = openFileDialog.FileName;
-                label_pathFile.Text = $"Путь к файлу: {_logicLayer.FilePath}";
-                try
-                {
-                    _logicLayer.ReadFile();
-                    ShowMessageWindow("Чтение файла выполнено успешно", MessageBoxIcon.Information);
-                    RenderCharts();
-                    button_openGridView.Enabled = true;
-                }
-                catch (BaseMathVectorChartsException ex)
-                {
-                    ShowMessageWindow(ex.Description, MessageBoxIcon.Error);
-                    ResetLabelFilePath();
-                    _logicLayer.Reset();
-                }
+                ReadFile();
             }
+        }
+
+        private void ReadFile()
+        {
+            try
+            {
+                _logicLayer.ReadFile();
+                label_pathFile.Text = $"Путь к файлу: {_logicLayer.FilePath}";
+                ShowMessageWindow("Чтение файла выполнено успешно", MessageBoxIcon.Information);
+                RenderCharts();
+                button_openGridView.Enabled = true;
+            }
+            catch (BaseMathVectorChartsException ex)
+            {
+                ShowMessageWindow(ex.Description, MessageBoxIcon.Error);
+                label_pathFile.Text = $"Файл был загружен с ошибками. Путь к файлу: {_logicLayer.FilePath}";
+                _logicLayer.Reset();
+                button_openGridView.Enabled = false;
+            }
+            button_openNotepad.Enabled = true;
+            button_reloadFile.Enabled = true;
         }
 
         /// <summary>
@@ -260,6 +271,16 @@ namespace MathVectorCharts
             }
             DataGridViewForm form = new DataGridViewForm(dataGridView);
             form.Show();
+        }
+
+        private void button_openNotepad_Click(object sender, EventArgs e)
+        {
+            Process.Start("C:\\Windows\\System32\\notepad.exe", _logicLayer.FilePath);
+        }
+
+        private void button_reloadFile_Click(object sender, EventArgs e)
+        {
+            ReadFile();
         }
     }
 }

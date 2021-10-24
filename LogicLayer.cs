@@ -28,9 +28,14 @@ namespace MathVectorCharts
         private string _filePath;
 
         /// <summary>
-        /// Загружен ли файл
+        /// Указан ли путь к файлу
         /// </summary>
-        private bool _fileIsLoad;
+        private bool _pathFileSpecified;
+
+        /// <summary>
+        /// Успешно ли загружен файл
+        /// </summary>
+        private bool _successFileLoad;
 
         /// <summary>
         /// Допустимое количество столбцов в читаемом файле
@@ -44,7 +49,16 @@ namespace MathVectorCharts
         {
             _dataSet = new IrisesDataSet();
             _linesFile = new List<string>();
-            _fileIsLoad = false;
+            _pathFileSpecified = false;
+            _successFileLoad = false;
+        }
+
+        /// <summary>
+        /// Свойство
+        /// </summary>
+        private bool SuccessFileLoad
+        {
+            get { return _successFileLoad; }
         }
 
         /// <summary>
@@ -64,7 +78,7 @@ namespace MathVectorCharts
             set
             {
                 _filePath = value;
-                _fileIsLoad = true;
+                _pathFileSpecified = true;
             }
         }
 
@@ -72,9 +86,9 @@ namespace MathVectorCharts
         /// Свойство для получения инфорамции о том, загружен файл или нет
         /// </summary>
         /// 
-        public bool FileIsLoad
+        public bool PathFileSpecified
         {
-            get { return _fileIsLoad; }
+            get { return _pathFileSpecified; }
         }
 
         /// <summary>
@@ -93,8 +107,8 @@ namespace MathVectorCharts
         {
             _dataSet.Clear();
             _linesFile.Clear();
-            _filePath = "";
-            _fileIsLoad = false;
+            _pathFileSpecified = false;
+            _successFileLoad = false;
         }
 
         /// <summary>
@@ -156,6 +170,7 @@ namespace MathVectorCharts
                 // Пробрасываем исключение на уровень выше (в класс Формы)
                 throw;
             }
+            _successFileLoad = true;
         }
 
         /// <summary>

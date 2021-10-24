@@ -52,6 +52,8 @@
             this.label_pathFile = new System.Windows.Forms.Label();
             this.button_reset_state = new System.Windows.Forms.Button();
             this.button_openGridView = new System.Windows.Forms.Button();
+            this.button_openNotepad = new System.Windows.Forms.Button();
+            this.button_reloadFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sepal_length)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sepal_width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_petal_length)).BeginInit();
@@ -129,7 +131,7 @@
             this.button_openFile.Name = "button_openFile";
             this.button_openFile.Size = new System.Drawing.Size(300, 48);
             this.button_openFile.TabIndex = 4;
-            this.button_openFile.Text = "Open CSV file";
+            this.button_openFile.Text = "Открыть CSV файл";
             this.button_openFile.UseVisualStyleBackColor = true;
             this.button_openFile.Click += new System.EventHandler(this.button_openFile_Click);
             // 
@@ -153,7 +155,7 @@
             // label_pathFile
             // 
             this.label_pathFile.AutoSize = true;
-            this.label_pathFile.Location = new System.Drawing.Point(625, 373);
+            this.label_pathFile.Location = new System.Drawing.Point(624, 723);
             this.label_pathFile.MinimumSize = new System.Drawing.Size(100, 0);
             this.label_pathFile.Name = "label_pathFile";
             this.label_pathFile.Size = new System.Drawing.Size(102, 13);
@@ -166,19 +168,42 @@
             this.button_reset_state.Name = "button_reset_state";
             this.button_reset_state.Size = new System.Drawing.Size(300, 48);
             this.button_reset_state.TabIndex = 7;
-            this.button_reset_state.Text = "Reset program state";
+            this.button_reset_state.Text = "Сбросить состояние программы";
             this.button_reset_state.UseVisualStyleBackColor = true;
             this.button_reset_state.Click += new System.EventHandler(this.button_reset_state_Click);
             // 
             // button_openGridView
             // 
+            this.button_openGridView.Enabled = false;
             this.button_openGridView.Location = new System.Drawing.Point(930, 372);
             this.button_openGridView.Name = "button_openGridView";
             this.button_openGridView.Size = new System.Drawing.Size(300, 48);
             this.button_openGridView.TabIndex = 8;
-            this.button_openGridView.Text = "Show GridView";
+            this.button_openGridView.Text = "Показать загруженный файл в виде таблицы";
             this.button_openGridView.UseVisualStyleBackColor = true;
             this.button_openGridView.Click += new System.EventHandler(this.button_openGridView_Click);
+            // 
+            // button_openNotepad
+            // 
+            this.button_openNotepad.Enabled = false;
+            this.button_openNotepad.Location = new System.Drawing.Point(624, 372);
+            this.button_openNotepad.Name = "button_openNotepad";
+            this.button_openNotepad.Size = new System.Drawing.Size(300, 48);
+            this.button_openNotepad.TabIndex = 9;
+            this.button_openNotepad.Text = "Открыть загруженный файл в блокноте";
+            this.button_openNotepad.UseVisualStyleBackColor = true;
+            this.button_openNotepad.Click += new System.EventHandler(this.button_openNotepad_Click);
+            // 
+            // button_reloadFile
+            // 
+            this.button_reloadFile.Enabled = false;
+            this.button_reloadFile.Location = new System.Drawing.Point(930, 426);
+            this.button_reloadFile.Name = "button_reloadFile";
+            this.button_reloadFile.Size = new System.Drawing.Size(300, 48);
+            this.button_reloadFile.TabIndex = 10;
+            this.button_reloadFile.Text = "Повторить загрузку файла по укзанному ранее пути";
+            this.button_reloadFile.UseVisualStyleBackColor = true;
+            this.button_reloadFile.Click += new System.EventHandler(this.button_reloadFile_Click);
             // 
             // FormIrisesAnalysis
             // 
@@ -186,6 +211,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1260, 762);
+            this.Controls.Add(this.button_reloadFile);
+            this.Controls.Add(this.button_openNotepad);
             this.Controls.Add(this.button_openGridView);
             this.Controls.Add(this.button_reset_state);
             this.Controls.Add(this.label_pathFile);
@@ -218,6 +245,8 @@
         private System.Windows.Forms.Label label_pathFile;
         private System.Windows.Forms.Button button_reset_state;
         private System.Windows.Forms.Button button_openGridView;
+        private System.Windows.Forms.Button button_openNotepad;
+        private System.Windows.Forms.Button button_reloadFile;
     }
 }
 
