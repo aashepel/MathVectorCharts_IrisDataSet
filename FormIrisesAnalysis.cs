@@ -109,6 +109,64 @@ namespace MathVectorCharts
         }
 
         /// <summary>
+        /// Метод для отрисовки конкретного столбика конкретной столбчатой диаграммы
+        /// </summary>
+        /// <param name="barChart">Ссылка на диаграмму</param>
+        /// <param name="i">Индекс отрисовываемой диаграммы</param>
+        /// <param name="j">Индекс типа ириса</param>
+        /// <param name="typesIrises">Уникальный список ирисов из дата-сетов</param>
+        private void RenderConcreteBarOfChart(Chart barChart, int i, int j, List<string> typesIrises)
+        {
+            // Добавляем новую серию на диаграмму
+            Series addedSeries = barChart.Series.Add(typesIrises[j]);
+            // Получаем ссылку на дата-сет конкретного типа ирисов
+            ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
+            if (concreteTypeIrisDataSet != null)
+            {
+                // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
+                double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
+                // Добавляем точку на серию
+                addedSeries.Points.Add(addingValue);
+                // Выставляем свойство, чтобы сверху столбчатых диаграмм отображалось значение
+                addedSeries.IsValueShownAsLabel = true;
+                // Значение, отображаемое сверху от столбцов
+                addedSeries.Label = addingValue.ToString();
+                // Заносим тип ириса в легенду текущей диаграммы
+                barChart.Legends.Add(typesIrises[j]);
+                // Делаем столбики в виде цилиндров
+                addedSeries["DrawingStyle"] = "Cylinder";
+            }
+        }
+
+        /// <summary>
+        /// Отрисовка конкретной диаграммы столбчатого типа
+        /// </summary>
+        /// <param name="chart">Ссылка на диаграмму</param>
+        /// <param name="i">Индекс отрисовываемой диаграммы</param>
+        /// <param name="typesIrises">Уникальный список ирисов из дата-сетов</param>
+        private void RenderBarChart(Chart chart, int i, List<string> typesIrises)
+        {
+            // Очищаем заголовок текущей диаграммы
+            chart.Titles.Clear();
+            // Добавляем заголовок диаграммы. Значение берем из статического свойства получения допустимых свойств ирисов
+            chart.Titles.Add(Iris.PossibleNameOfParams[i]);
+            // Убираем ось X
+            chart.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+            // Включаем 3D
+            chart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            // Выставляем угол поворота диаграммы
+            chart.ChartAreas[0].Area3DStyle.Rotation = 50;
+            // Получаем ссылку на коллекцию серий текущей диаграммы
+            var seriesCurrentChart = chart.Series;
+            // Очищаем все серии из коллекции
+            seriesCurrentChart.Clear();
+            for (int j = 0; j < typesIrises.Count; j++)
+            {
+                RenderConcreteBarOfChart(chart, i, j, typesIrises);
+            }
+        }
+
+        /// <summary>
         /// Метод для отрисовки диаграмм
         /// </summary>
         private void RenderCharts()
@@ -118,43 +176,10 @@ namespace MathVectorCharts
             // Делаем цикл для заполнения всех столбчатых диаграмм
             for (int i = 0; i < _barCharts.Count; i++)
             {
-                // Очищаем заголовок текущей диаграммы
-                _barCharts[i].Titles.Clear();
-                // Добавляем заголовок диаграммы. Значение берем из статического свойства получения допустимых свойств ирисов
-                _barCharts[i].Titles.Add(Iris.PossibleNameOfParams[i]);
-                // Убираем ось X
-                _barCharts[i].ChartAreas[0].AxisX.LabelStyle.Enabled = false;
-                // Включаем 3D
-                _barCharts[i].ChartAreas[0].Area3DStyle.Enable3D = true;
-                // Выставляем угол поворота диаграммы
-                _barCharts[i].ChartAreas[0].Area3DStyle.Rotation = 50;
-                // Получаем ссылку на коллекцию серий текущей диаграммы
-                var seriesCurrentChart = _barCharts[i].Series;
-                // Очищаем все серии из коллекции
-                seriesCurrentChart.Clear();
-                for (int j = 0; j < typesIrises.Count; j++)
-                {
-                    // Добавляем новую серию на диаграмму
-                    Series addedSeries = seriesCurrentChart.Add(typesIrises[j]);
-                    // Получаем ссылку на дата-сет конкретного типа ирисов
-                    ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
-                    if (concreteTypeIrisDataSet != null)
-                    {
-                        // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
-                        double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
-                        // Добавляем точку на серию
-                        addedSeries.Points.Add(addingValue);
-                        // Выставляем свойство, чтобы сверху столбчатых диаграмм отображалось значение
-                        addedSeries.IsValueShownAsLabel = true;
-                        // Значение, отображаемое сверху от столбцов
-                        addedSeries.Label = addingValue.ToString();
-                        // Заносим тип ириса в легенду текущей диаграммы
-                        _barCharts[i].Legends.Add(typesIrises[j]);
-                        // Делаем столбики в виде цилиндров
-                        addedSeries["DrawingStyle"] = "Cylinder";
-                    }
-                }
+                RenderBarChart(_barCharts[i], i, typesIrises);
             }
+
+
             // Очищаем серии круговой диаграммы
             pieChart.Series.Clear();
             // Вычисляем усредненные вектора для каждого типа ирисов
