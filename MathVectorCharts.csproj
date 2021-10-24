@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="ConcreteTypeIrisDataSet.cs" />
     <Compile Include="Exceptions\BaseMathVectorChartsException.cs" />
+    <Compile Include="Exceptions\ImpossibleCalculateMeanValueOfColumn.cs" />
+    <Compile Include="Exceptions\ImpossibleCalculateMeanVectorException.cs" />
     <Compile Include="Exceptions\InvalidFileContentException.cs" />
     <Compile Include="Exceptions\NotExsistFileException.cs" />
     <Compile Include="FormIrisesAnalysis.cs">

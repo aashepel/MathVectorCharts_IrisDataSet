@@ -1,4 +1,5 @@
 ﻿using LinearAlgebra;
+using MathVectorCharts.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,13 +53,32 @@ namespace MathVectorCharts
         /// <returns>Усредненный математический вектор</returns>
         public MathVector ArithmeticMeanVector()
         {
-            List<double> arithmeticMeansValues = new List<double>();
-            for (int i = 0; i < 4; i++)
+
+            IMathVector arithmeticMeansVector;
+            // Если список ирисов пуст, бросаем исключение
+            if (_irises.Any())
             {
-                arithmeticMeansValues.Add(ArithmeticMeanOfColumn(i));
+                arithmeticMeansVector = new MathVector(_irises.ElementAt(0).VectorParams);
             }
-            MathVector vector = new MathVector(arithmeticMeansValues.ToArray());
-            return vector;
+            else
+            {
+                throw new ImpossibleCalculateMeanVectorException();
+            }
+
+            try
+            {
+                foreach (Iris iris in _irises)
+                {
+                    arithmeticMeansVector = (arithmeticMeansVector as MathVector) + iris.VectorParams;
+                }
+            }
+            // Если при вычислении усредненного вектора возникает исключительная ситуация (например, обращение к несуществующему индексу вектора), бросаем свое исключение
+            catch
+            {
+                throw new ImpossibleCalculateMeanVectorException();
+            }
+
+            return (arithmeticMeansVector as MathVector);
         }
 
         /// <summary>
@@ -68,12 +88,25 @@ namespace MathVectorCharts
         /// <returns>Среднее арифмитическое значение</returns>
         public double ArithmeticMeanOfColumn(int indexColumn)
         {
+            // Если ирисов в списке нет, бросаем исключение
+            if (!_irises.Any())
+            {
+                throw new ImpossibleCalculateMeanValueOfColumn();
+            }
             double sum = 0;
             int counter = 0;
-            foreach(Iris iris in _irises)
+            try
             {
-                sum += iris.VectorParams[indexColumn];
-                counter++;
+                foreach (Iris iris in _irises)
+                {
+                    sum += iris.VectorParams[indexColumn];
+                    counter++;
+                }
+            }
+            // Если при вычислении усредненного вектора возникает исключительная ситуация (например, обращение к несуществующему индексу вектора), бросаем свое исключение
+            catch
+            {
+                throw new ImpossibleCalculateMeanValueOfColumn();
             }
             return sum / counter;
         }
