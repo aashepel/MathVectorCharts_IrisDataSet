@@ -207,6 +207,8 @@ namespace MathVectorCharts
             }
             // Включаем 3D
             pieChart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            // Очищаем легенду
+            pieChart.Legends.Clear();
             // Добавляем серию с произвольным названием
             Series addedSeriesPieChart = pieChart.Series.Add("s1");
             // Очищаем все точки
