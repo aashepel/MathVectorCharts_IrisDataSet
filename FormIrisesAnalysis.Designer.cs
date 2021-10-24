@@ -51,6 +51,7 @@
             this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label_pathFile = new System.Windows.Forms.Label();
             this.button_reset_state = new System.Windows.Forms.Button();
+            this.button_openGridView = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sepal_length)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sepal_width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_petal_length)).BeginInit();
@@ -169,12 +170,23 @@
             this.button_reset_state.UseVisualStyleBackColor = true;
             this.button_reset_state.Click += new System.EventHandler(this.button_reset_state_Click);
             // 
+            // button_openGridView
+            // 
+            this.button_openGridView.Location = new System.Drawing.Point(930, 372);
+            this.button_openGridView.Name = "button_openGridView";
+            this.button_openGridView.Size = new System.Drawing.Size(300, 48);
+            this.button_openGridView.TabIndex = 8;
+            this.button_openGridView.Text = "Show GridView";
+            this.button_openGridView.UseVisualStyleBackColor = true;
+            this.button_openGridView.Click += new System.EventHandler(this.button_openGridView_Click);
+            // 
             // FormIrisesAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1260, 762);
+            this.Controls.Add(this.button_openGridView);
             this.Controls.Add(this.button_reset_state);
             this.Controls.Add(this.label_pathFile);
             this.Controls.Add(this.pieChart);
@@ -205,6 +217,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart pieChart;
         private System.Windows.Forms.Label label_pathFile;
         private System.Windows.Forms.Button button_reset_state;
+        private System.Windows.Forms.Button button_openGridView;
     }
 }
 

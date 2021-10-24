@@ -18,6 +18,11 @@ namespace MathVectorCharts
         private IrisesDataSet _dataSet;
 
         /// <summary>
+        /// Содержимое файла построчно
+        /// </summary>
+        private List<string> _linesFile;
+
+        /// <summary>
         /// Путь к файлу
         /// </summary>
         private string _filePath;
@@ -38,7 +43,16 @@ namespace MathVectorCharts
         public LogicLayer()
         {
             _dataSet = new IrisesDataSet();
+            _linesFile = new List<string>();
             _fileIsLoad = false;
+        }
+
+        /// <summary>
+        /// Свойство для получения строк файла
+        /// </summary>
+        public List<string> LinesFile
+        {
+            get { return _linesFile; }
         }
 
         /// <summary>
@@ -78,6 +92,7 @@ namespace MathVectorCharts
         public void Reset()
         {
             _dataSet.Clear();
+            _linesFile.Clear();
             _filePath = "";
             _fileIsLoad = false;
         }
@@ -98,6 +113,7 @@ namespace MathVectorCharts
                 }
                 // Список строк файла
                 List<string> linesFile = File.ReadAllLines(FilePath).ToList();
+                _linesFile = new List<string>(linesFile);
                 // Если строк в файле меньше двух пробрасываем исключение
                 if (linesFile.Count < 2)
                 {

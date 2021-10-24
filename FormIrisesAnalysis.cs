@@ -30,6 +30,7 @@ namespace MathVectorCharts
             _barCharts.Add(chart_sepal_width);
             ClearAllCharts();
             ResetLabelFilePath();
+            button_openGridView.Enabled = false;
         }
         /// <summary>
         /// Метод для отображения сообщения
@@ -81,6 +82,7 @@ namespace MathVectorCharts
             ClearAllCharts();
             _logicLayer.Reset();
             ResetLabelFilePath();
+            button_openGridView.Enabled = false;
         }
 
         private void button_openFile_Click(object sender, EventArgs e)
@@ -98,6 +100,7 @@ namespace MathVectorCharts
                     _logicLayer.ReadFile();
                     ShowMessageWindow("Чтение файла выполнено успешно", MessageBoxIcon.Information);
                     RenderCharts();
+                    button_openGridView.Enabled = true;
                 }
                 catch (BaseMathVectorChartsException ex)
                 {
@@ -160,6 +163,8 @@ namespace MathVectorCharts
             var seriesCurrentChart = chart.Series;
             // Очищаем все серии из коллекции
             seriesCurrentChart.Clear();
+            // Очищаем легенду
+            chart.Legends.Clear();
             for (int j = 0; j < typesIrises.Count; j++)
             {
                 RenderConcreteBarOfChart(chart, i, j, typesIrises);
@@ -236,6 +241,23 @@ namespace MathVectorCharts
         private void button_reset_state_Click(object sender, EventArgs e)
         {
             ResetStateProgram();
+        }
+
+        private void button_openGridView_Click(object sender, EventArgs e)
+        {
+            DataGridView dataGridView = new DataGridView();
+            List<string> lines = new List<string>(_logicLayer.LinesFile);
+            foreach (var header in lines.ElementAt(0).Split(','))
+            {
+                dataGridView.Columns.Add(header, header);
+            }
+            lines.RemoveAt(0);
+            foreach (var line in lines)
+            {
+                dataGridView.Rows.Add(line.Split(','));
+            }
+            DataGridViewForm form = new DataGridViewForm(dataGridView);
+            form.Show();
         }
     }
 }

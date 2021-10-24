@@ -53,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConcreteTypeIrisDataSet.cs" />
+    <Compile Include="DataGridViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataGridViewForm.Designer.cs">
+      <DependentUpon>DataGridViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exceptions\BaseMathVectorChartsException.cs" />
     <Compile Include="Exceptions\ImpossibleCalculateMeanValueOfColumn.cs" />
     <Compile Include="Exceptions\ImpossibleCalculateMeanVectorException.cs" />
@@ -69,6 +75,9 @@
     <Compile Include="LogicLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DataGridViewForm.resx">
+      <DependentUpon>DataGridViewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormIrisesAnalysis.resx">
       <DependentUpon>FormIrisesAnalysis.cs</DependentUpon>
     </EmbeddedResource>

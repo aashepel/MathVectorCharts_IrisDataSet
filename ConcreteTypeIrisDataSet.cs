@@ -71,6 +71,7 @@ namespace MathVectorCharts
                 {
                     arithmeticMeansVector = (arithmeticMeansVector as MathVector) + iris.VectorParams;
                 }
+                arithmeticMeansVector = (arithmeticMeansVector as MathVector) / _irises.Count;
             }
             // Если при вычислении усредненного вектора возникает исключительная ситуация (например, обращение к несуществующему индексу вектора), бросаем свое исключение
             catch
