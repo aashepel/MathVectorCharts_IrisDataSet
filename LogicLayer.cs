@@ -135,8 +135,6 @@ namespace MathVectorCharts
                 }
                 // Заголовки столбцов в таблице (sepal_length,sepal_width,petal_length,petal_width,species)
                 List<string> headersOfColumns = linesFile.ElementAt(0).Split(',').ToList();
-                // Удаляем последний заголовок, так как принципиальной роли он не играет
-                headersOfColumns.RemoveAt(headersOfColumns.Count - 1);
                 // Проверяем правильно ли названы заголовки в файле
                 CheckCorrectnessHeaders(headersOfColumns);
                 // Удалеям первую строчку, так как это заголовки столбцов (при заполнении дата-сета эта строка не нужна)
@@ -180,6 +178,11 @@ namespace MathVectorCharts
         /// <exception cref="InvalidFileContentException"></exception>
         private void CheckCorrectnessHeaders(List<string> headers)
         {
+            // Если количество заголовков не соответствует ожидаемому числу, то бросаем исключение,
+            if (headers.Count != acceptableСountColumn)
+            {
+                throw new InvalidFileContentException();
+            }
             // Перебираем все заголовки столбцов переданного файла
             foreach (var title in headers)
             {

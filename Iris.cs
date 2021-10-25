@@ -22,7 +22,7 @@ namespace MathVectorCharts
         /// <summary>
         /// Допустимые значения параметров ириса
         /// </summary>
-        private static List<string> _possibleNameOfParams = new List<string> { "sepal_length", "sepal_width", "petal_length", "petal_width" };
+        private static List<string> _possibleNameOfParams = new List<string> { "sepal_length", "sepal_width", "petal_length", "petal_width", "species" };
 
         /// <summary>
         /// Допустимые типы ирисов (поле не используется)
