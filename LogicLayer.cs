@@ -120,13 +120,15 @@ namespace MathVectorCharts
         {
             try
             {
+                // Перед чтением файла очищаем дата-сет
+                _dataSet.Clear();
                 // Проверяем существует ли файл
                 if (!File.Exists(FilePath))
                 {
                     throw new NotExsistFileException();
                 }
                 // Список строк файла
-                List<string> linesFile = File.ReadAllLines(FilePath).ToList();
+                List<string> linesFile = new List<string>(File.ReadAllLines(FilePath));
                 _linesFile = new List<string>(linesFile);
                 // Если строк в файле меньше двух пробрасываем исключение
                 if (linesFile.Count < 2)
@@ -151,7 +153,7 @@ namespace MathVectorCharts
                     }
                     // Получаем текущий тип ириса из последней ячейки строки
                     string currentIrisType = cellsRow.Last();
-                    // Удаляем последнюю ячейку строки, так как в дальнейшем она будет мешать
+                    // Удаляем последнюю ячейку строки, так как она отвечает за тип ириса (в математическом векторе этот параметр не нужен)
                     cellsRow.RemoveAt(cellsRow.Count - 1);
                     // Ячейки строки представляем как Double для дальнейшего удобства создания математического вектора
                     List<double> values = ParametersOfRowsToDoubleArray(cellsRow);

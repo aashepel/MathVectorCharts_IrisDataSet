@@ -12,19 +12,19 @@ namespace MathVectorCharts
 {
     public partial class DataGridViewForm : Form
     {
-        public DataGridViewForm(DataGridView dataGridView)
+        public DataGridViewForm(List<string> columns, List<List<string>> rows)
         {
             InitializeComponent();
-            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            foreach (var col in columns)
             {
-                dataGridView1.Columns.Add(dataGridView.Columns[i].Name, dataGridView.Columns[i].HeaderText);
+                dataGridView1.Columns.Add(col, col);
             }
-            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            foreach (var rowCells in rows)
             {
                 int indexRow = dataGridView1.Rows.Add();
-                for (int j = 0; j < dataGridView.Rows[i].Cells.Count; j++)
+                for (int i = 0; i < rowCells.Count; i++)
                 {
-                    dataGridView1.Rows[indexRow].Cells[j].Value = dataGridView.Rows[i].Cells[j].Value;
+                    dataGridView1.Rows[indexRow].Cells[i].Value = rowCells[i];
                 }
             }
         }

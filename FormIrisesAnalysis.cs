@@ -25,11 +25,11 @@ namespace MathVectorCharts
         {
             InitializeComponent();
             _logicLayer = new LogicLayer();
-            // Порядок добавления важен !!!!
-            _barCharts.Add(chart_petal_length);
-            _barCharts.Add(chart_petal_width);
-            _barCharts.Add(chart_sepal_length);
-            _barCharts.Add(chart_sepal_width);
+            // Порядок добавления НЕ важен
+            _barCharts.Add(chartBar_1);
+            _barCharts.Add(chartBar_2);
+            _barCharts.Add(chartBar_3);
+            _barCharts.Add(chartBar_4);
             ClearAllCharts();
             ResetLabelFilePath();
         }
@@ -97,11 +97,14 @@ namespace MathVectorCharts
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 _logicLayer.FilePath = openFileDialog.FileName;
-                ReadFile();
+                ReadFile_onClickLoadOrReloadFile();
             }
         }
 
-        private void ReadFile()
+        /// <summary>
+        /// Метод, вызываемый как при нажатии на кнопку загрузки, так и перезагрузки файла
+        /// </summary>
+        private void ReadFile_onClickLoadOrReloadFile()
         {
             try
             {
@@ -131,14 +134,15 @@ namespace MathVectorCharts
         /// <param name="typesIrises">Уникальный список ирисов из дата-сетов</param>
         private void RenderConcreteBarOfChart(Chart barChart, int i, int j, List<string> typesIrises)
         {
-            // Добавляем новую серию на диаграмму
-            Series addedSeries = barChart.Series.Add(typesIrises[j]);
             // Получаем ссылку на дата-сет конкретного типа ирисов
             ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
+            // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
+            double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
+            // Добавляем новую серию на диаграмму
+            //Series addedSeries = barChart.Series.Add($"{typesIrises[j]} | {addingValue}");
+            Series addedSeries = barChart.Series.Add(typesIrises[j]);
             if (concreteTypeIrisDataSet != null)
             {
-                // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
-                double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
                 // Добавляем точку на серию
                 addedSeries.Points.Add(addingValue);
                 // Выставляем свойство, чтобы сверху столбчатых диаграмм отображалось значение
@@ -170,10 +174,8 @@ namespace MathVectorCharts
             chart.ChartAreas[0].Area3DStyle.Enable3D = true;
             // Выставляем угол поворота диаграммы
             chart.ChartAreas[0].Area3DStyle.Rotation = 50;
-            // Получаем ссылку на коллекцию серий текущей диаграммы
-            var seriesCurrentChart = chart.Series;
             // Очищаем все серии из коллекции
-            seriesCurrentChart.Clear();
+            chart.Series.Clear();
             // Очищаем легенду
             chart.Legends.Clear();
             for (int j = 0; j < typesIrises.Count; j++)
@@ -187,6 +189,7 @@ namespace MathVectorCharts
         /// </summary>
         private void RenderCharts()
         {
+            ClearAllCharts();
             // Получаем уникальный список ирисов из дата-сетов
             List<string> typesIrises = new List<string>(_logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.Select(p => p.Type));
             // Делаем цикл для заполнения всех столбчатых диаграмм
@@ -258,18 +261,15 @@ namespace MathVectorCharts
 
         private void button_openGridView_Click(object sender, EventArgs e)
         {
-            DataGridView dataGridView = new DataGridView();
             List<string> lines = new List<string>(_logicLayer.LinesFile);
-            foreach (var header in lines.ElementAt(0).Split(','))
-            {
-                dataGridView.Columns.Add(header, header);
-            }
+            List<string> columns = new List<string>(lines[0].Split(','));
+            List<List<string>> rows = new List<List<string>>();
             lines.RemoveAt(0);
             foreach (var line in lines)
             {
-                dataGridView.Rows.Add(line.Split(','));
+                rows.Add(new List<string>(line.Split(',')));
             }
-            DataGridViewForm form = new DataGridViewForm(dataGridView);
+            DataGridViewForm form = new DataGridViewForm(columns,rows);
             form.Show();
         }
 
@@ -280,7 +280,7 @@ namespace MathVectorCharts
 
         private void button_reloadFile_Click(object sender, EventArgs e)
         {
-            ReadFile();
+            ReadFile_onClickLoadOrReloadFile();
         }
     }
 }
