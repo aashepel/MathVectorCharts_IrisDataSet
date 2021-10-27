@@ -60,6 +60,7 @@
       <DependentUpon>DataGridViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\BaseMathVectorChartsException.cs" />
+    <Compile Include="Exceptions\ExceededAllowedFileLengthException.cs" />
     <Compile Include="Exceptions\ImpossibleCalculateMeanValueOfColumn.cs" />
     <Compile Include="Exceptions\ImpossibleCalculateMeanVectorException.cs" />
     <Compile Include="Exceptions\InvalidFileContentException.cs" />

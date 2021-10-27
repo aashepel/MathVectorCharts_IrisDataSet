@@ -122,10 +122,16 @@ namespace MathVectorCharts
             {
                 // Перед чтением файла очищаем дата-сет
                 _dataSet.Clear();
+                FileInfo fileInfo = new FileInfo(FilePath);
                 // Проверяем существует ли файл
-                if (!File.Exists(FilePath))
+                if (!fileInfo.Exists)
                 {
                     throw new NotExsistFileException();
+                }
+                // Провереяем размер файла. Он не должен быть больше 1 МБ
+                if (fileInfo.Length > 1048576)
+                {
+                    new ExceededAllowedFileLengthException();
                 }
                 // Список строк файла
                 List<string> linesFile = new List<string>(File.ReadAllLines(FilePath));
