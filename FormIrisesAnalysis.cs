@@ -130,17 +130,16 @@ namespace MathVectorCharts
         /// </summary>
         /// <param name="barChart">Ссылка на диаграмму</param>
         /// <param name="i">Индекс отрисовываемой диаграммы</param>
-        /// <param name="j">Индекс типа ириса</param>
-        /// <param name="typesIrises">Уникальный список ирисов из дата-сетов</param>
-        private void RenderConcreteBarOfChart(Chart barChart, int i, int j, List<string> typesIrises)
+        /// <param name="typeIris">Тип ириса</param>
+        private void RenderConcreteBarOfChart(Chart barChart, int i, string typeIris)
         {
             // Получаем ссылку на дата-сет конкретного типа ирисов
-            ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
+            ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typeIris);
             // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
             double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
             // Добавляем новую серию на диаграмму
             //Series addedSeries = barChart.Series.Add($"{typesIrises[j]} | {addingValue}");
-            Series addedSeries = barChart.Series.Add(typesIrises[j]);
+            Series addedSeries = barChart.Series.Add(typeIris);
             if (concreteTypeIrisDataSet != null)
             {
                 // Добавляем точку на серию
@@ -150,7 +149,7 @@ namespace MathVectorCharts
                 // Значение, отображаемое сверху от столбцов
                 addedSeries.Label = addingValue.ToString();
                 // Заносим тип ириса в легенду текущей диаграммы
-                barChart.Legends.Add(typesIrises[j]);
+                barChart.Legends.Add(typeIris);
                 // Делаем столбики в виде цилиндров
                 addedSeries["DrawingStyle"] = "Cylinder";
             }
@@ -180,7 +179,7 @@ namespace MathVectorCharts
             chart.Legends.Clear();
             for (int j = 0; j < typesIrises.Count; j++)
             {
-                RenderConcreteBarOfChart(chart, i, j, typesIrises);
+                RenderConcreteBarOfChart(chart, i, typesIrises[j]);
             }
         }
 
