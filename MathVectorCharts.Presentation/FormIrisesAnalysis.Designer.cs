@@ -1,4 +1,4 @@
-﻿namespace MathVectorCharts
+﻿namespace MathVectorCharts.Presentation
 {
     partial class FormIrisesAnalysis
     {

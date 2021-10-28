@@ -1,10 +1,8 @@
 ﻿using LinearAlgebra;
-using MathVectorCharts.Exceptions;
-using System;
+using MathVectorCharts.Domain.Entities;
+using MathVectorCharts.Domain.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathVectorCharts
 {
@@ -110,6 +108,15 @@ namespace MathVectorCharts
                 throw new ImpossibleCalculateMeanValueOfColumn();
             }
             return sum / counter;
+        }
+        public double MaxArithmeticMeanValue()
+        {
+            double[] arr = new double[4];
+            for (int i = 0; i < 4; i++)
+            {
+                arr[i] = ArithmeticMeanOfColumn(i);
+            }
+            return arr.Max();
         }
         public double ArithmeticMeanSepalLength()
         {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathVectorCharts.Exceptions
+namespace MathVectorCharts.Domain.Exceptions
 {
-    internal class InvalidFileContentException : BaseMathVectorChartsException
+    public class InvalidFileContentException : BaseMathVectorChartsException
     {
         public InvalidFileContentException()
         {

@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="LinearAlgebra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\LinearAlgebra.dll</HintPath>
+      <HintPath>..\LinearAlgebra.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -50,30 +50,24 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TinyCsvParser, Version=2.6.1.0, Culture=neutral, PublicKeyToken=d7df35b038077099, processorArchitecture=MSIL">
+      <HintPath>packages\TinyCsvParser.2.6.1\lib\net45\TinyCsvParser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConcreteTypeIrisDataSet.cs" />
     <Compile Include="DataGridViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataGridViewForm.Designer.cs">
       <DependentUpon>DataGridViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\BaseMathVectorChartsException.cs" />
-    <Compile Include="Exceptions\ExceededAllowedFileLengthException.cs" />
-    <Compile Include="Exceptions\ImpossibleCalculateMeanValueOfColumn.cs" />
-    <Compile Include="Exceptions\ImpossibleCalculateMeanVectorException.cs" />
-    <Compile Include="Exceptions\InvalidFileContentException.cs" />
-    <Compile Include="Exceptions\NotExsistFileException.cs" />
     <Compile Include="FormIrisesAnalysis.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormIrisesAnalysis.Designer.cs">
       <DependentUpon>FormIrisesAnalysis.cs</DependentUpon>
     </Compile>
-    <Compile Include="Iris.cs" />
-    <Compile Include="IrisesDataSet.cs" />
-    <Compile Include="LogicLayer.cs" />
+    <Compile Include="LogicLayerFacade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DataGridViewForm.resx">
@@ -91,7 +85,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="data.csv" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,6 +98,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathVectorCharts.Domain\MathVectorCharts.Domain.csproj">
+      <Project>{f10520af-a7ce-4b3f-b3cf-88d69efea715}</Project>
+      <Name>MathVectorCharts.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MathVectorCharts.Infrastucture.Persistence\MathVectorCharts.Infrastucture.Persistence.csproj">
+      <Project>{0433c730-308b-4989-ab96-ffa6025adf83}</Project>
+      <Name>MathVectorCharts.Infrastucture.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MathVectorCharts.Infrastucture\MathVectorCharts.Infrastucture.csproj">
+      <Project>{7eecf866-c3e1-49ca-8b50-150b910575f0}</Project>
+      <Name>MathVectorCharts.Infrastucture</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

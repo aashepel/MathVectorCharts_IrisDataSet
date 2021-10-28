@@ -1,8 +1,6 @@
-﻿using System;
+﻿using MathVectorCharts.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathVectorCharts
 {
@@ -55,6 +53,14 @@ namespace MathVectorCharts
                 // то делаем попытку добавить ирис в дата-сет, предназначенный для такого типа ирисов
                 _arrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == iris.TypeIris)
                     ?.Add(iris);
+            }
+        }
+
+        public void AddRange(List<Iris> irises)
+        {
+            foreach (var iris in irises)
+            {
+                Add(iris);
             }
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathVectorCharts.Exceptions
+namespace MathVectorCharts.Domain.Exceptions
 {
     public class ExceededAllowedFileLengthException : BaseMathVectorChartsException
     {

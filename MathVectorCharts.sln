@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts", "MathVectorCharts.csproj", "{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts.Domain", "MathVectorCharts.Domain\MathVectorCharts.Domain.csproj", "{F10520AF-A7CE-4B3F-B3CF-88D69EFEA715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts.Infrastucture", "MathVectorCharts.Infrastucture\MathVectorCharts.Infrastucture.csproj", "{7EECF866-C3E1-49CA-8B50-150B910575F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts.Infrastucture.Persistence", "MathVectorCharts.Infrastucture.Persistence\MathVectorCharts.Infrastucture.Persistence.csproj", "{0433C730-308B-4989-AB96-FFA6025ADF83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts.Presentation", "MathVectorCharts.Presentation\MathVectorCharts.Presentation.csproj", "{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathVectorCharts.Application", "MathVectorCharts.Application\MathVectorCharts.Application.csproj", "{DF29E273-0EEF-4616-B862-A477C52ABD55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F10520AF-A7CE-4B3F-B3CF-88D69EFEA715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10520AF-A7CE-4B3F-B3CF-88D69EFEA715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10520AF-A7CE-4B3F-B3CF-88D69EFEA715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10520AF-A7CE-4B3F-B3CF-88D69EFEA715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EECF866-C3E1-49CA-8B50-150B910575F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EECF866-C3E1-49CA-8B50-150B910575F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EECF866-C3E1-49CA-8B50-150B910575F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EECF866-C3E1-49CA-8B50-150B910575F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0433C730-308B-4989-AB96-FFA6025ADF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0433C730-308B-4989-AB96-FFA6025ADF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0433C730-308B-4989-AB96-FFA6025ADF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0433C730-308B-4989-AB96-FFA6025ADF83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF29E273-0EEF-4616-B862-A477C52ABD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF29E273-0EEF-4616-B862-A477C52ABD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF29E273-0EEF-4616-B862-A477C52ABD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF29E273-0EEF-4616-B862-A477C52ABD55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

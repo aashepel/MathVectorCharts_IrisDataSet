@@ -1,30 +1,26 @@
 ﻿using LinearAlgebra;
-using MathVectorCharts.Exceptions;
+using MathVectorCharts.Domain.Entities;
+using MathVectorCharts.Domain.Exceptions;
+using MathVectorCharts.Presentation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Application = System.Windows.Forms.Application;
 using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace MathVectorCharts
+namespace MathVectorCharts.Presentation
 {
     public partial class FormIrisesAnalysis : Form
     {
-        private LogicLayer _logicLayer;
+        private LogicLayerFacade _logicLayer;
         private List<Chart> _barCharts = new List<Chart>();
         public FormIrisesAnalysis()
         {
             InitializeComponent();
-            _logicLayer = new LogicLayer();
             // Порядок добавления НЕ важен
             _barCharts.Add(chartBar_1);
             _barCharts.Add(chartBar_2);
@@ -96,18 +92,18 @@ namespace MathVectorCharts
             openFileDialog.InitialDirectory = Application.StartupPath;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                _logicLayer.FilePath = openFileDialog.FileName;
-                ReadFile_onClickLoadOrReloadFile();
+                ReadFile_onClickLoadOrReloadFile(openFileDialog.FileName);
             }
         }
 
         /// <summary>
         /// Метод, вызываемый как при нажатии на кнопку загрузки, так и перезагрузки файла
         /// </summary>
-        private void ReadFile_onClickLoadOrReloadFile()
+        private void ReadFile_onClickLoadOrReloadFile(string filePath)
         {
             try
             {
+                _logicLayer = new LogicLayerFacade(filePath);
                 _logicLayer.ReadFile();
                 label_pathFile.Text = $"Путь к файлу: {_logicLayer.FilePath}";
                 ShowMessageWindow("Чтение файла выполнено успешно", MessageBoxIcon.Information);
@@ -120,6 +116,7 @@ namespace MathVectorCharts
                 label_pathFile.Text = $"Файл был загружен с ошибками. Путь к файлу: {_logicLayer.FilePath}";
                 _logicLayer.Reset();
                 button_openGridView.Enabled = false;
+                ClearAllCharts();
             }
             button_openNotepad.Enabled = true;
             button_reloadFile.Enabled = true;
@@ -131,15 +128,13 @@ namespace MathVectorCharts
         /// <param name="barChart">Ссылка на диаграмму</param>
         /// <param name="i">Индекс отрисовываемой диаграммы</param>
         /// <param name="typeIris">Тип ириса</param>
-        private void RenderConcreteBarOfChart(Chart barChart, int i, string typeIris)
+        private void RenderConcreteBarOfChart(Chart barChart, int i, ConcreteTypeIrisDataSet concreteTypeIrisDataSet)
         {
-            // Получаем ссылку на дата-сет конкретного типа ирисов
-            ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typeIris);
             // Вычисляем среднее арифм. для нужного столбца дата-сета и округляем его для удобства
             double addingValue = Math.Round(concreteTypeIrisDataSet.ArithmeticMeanOfColumn(i), 2);
             // Добавляем новую серию на диаграмму
             //Series addedSeries = barChart.Series.Add($"{typesIrises[j]} | {addingValue}");
-            Series addedSeries = barChart.Series.Add(typeIris);
+            Series addedSeries = barChart.Series.Add(concreteTypeIrisDataSet.Type);
             if (concreteTypeIrisDataSet != null)
             {
                 // Добавляем точку на серию
@@ -149,7 +144,7 @@ namespace MathVectorCharts
                 // Значение, отображаемое сверху от столбцов
                 addedSeries.Label = addingValue.ToString();
                 // Заносим тип ириса в легенду текущей диаграммы
-                barChart.Legends.Add(typeIris);
+                barChart.Legends.Add(concreteTypeIrisDataSet.Type);
                 // Делаем столбики в виде цилиндров
                 addedSeries["DrawingStyle"] = "Cylinder";
             }
@@ -163,6 +158,8 @@ namespace MathVectorCharts
         /// <param name="typesIrises">Уникальный список ирисов из дата-сетов</param>
         private void RenderBarChart(Chart chart, int i, List<string> typesIrises)
         {
+            chart.ChartAreas.Clear();
+            chart.ChartAreas.Add("s1");
             // Очищаем заголовок текущей диаграммы
             chart.Titles.Clear();
             // Добавляем заголовок диаграммы. Значение берем из статического свойства получения допустимых свойств ирисов
@@ -179,7 +176,8 @@ namespace MathVectorCharts
             chart.Legends.Clear();
             for (int j = 0; j < typesIrises.Count; j++)
             {
-                RenderConcreteBarOfChart(chart, i, typesIrises[j]);
+                ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
+                RenderConcreteBarOfChart(chart, i, concreteTypeIrisDataSet);
             }
         }
 
@@ -197,9 +195,6 @@ namespace MathVectorCharts
                 RenderBarChart(_barCharts[i], i, typesIrises);
             }
 
-
-            // Очищаем серии круговой диаграммы
-            pieChart.Series.Clear();
             // Вычисляем усредненные вектора для каждого типа ирисов
             List<Iris> meanIrisesOfTypeArray = new List<Iris>();
             // Делаем усредненный вектор и ирис для каждого типа ирисов
@@ -218,10 +213,13 @@ namespace MathVectorCharts
                     meanIrisesOfTypeArray.Add(currentMeanIris);
                 }
             }
+
             // Включаем 3D
             pieChart.ChartAreas[0].Area3DStyle.Enable3D = true;
             // Очищаем легенду
             pieChart.Legends.Clear();
+            // Очищаем серии круговой диаграммы
+            pieChart.Series.Clear();
             // Добавляем серию с произвольным названием
             Series addedSeriesPieChart = pieChart.Series.Add("s1");
             // Очищаем все точки
@@ -260,15 +258,15 @@ namespace MathVectorCharts
 
         private void button_openGridView_Click(object sender, EventArgs e)
         {
-            List<string> lines = new List<string>(_logicLayer.LinesFile);
-            List<string> columns = new List<string>(lines[0].Split(','));
-            List<List<string>> rows = new List<List<string>>();
-            lines.RemoveAt(0);
-            foreach (var line in lines)
-            {
-                rows.Add(new List<string>(line.Split(',')));
-            }
-            DataGridViewForm form = new DataGridViewForm(columns,rows);
+            //List<string> lines = new List<string>(_logicLayer.LinesFile);
+            //List<string> columns = new List<string>(lines[0].Split(','));
+            //List<List<string>> rows = new List<List<string>>();
+            //lines.RemoveAt(0);
+            //foreach (var line in lines)
+            //{
+            //    rows.Add(new List<string>(line.Split(',')));
+            //}
+            DataGridViewForm form = new DataGridViewForm();
             form.Show();
         }
 
@@ -279,7 +277,7 @@ namespace MathVectorCharts
 
         private void button_reloadFile_Click(object sender, EventArgs e)
         {
-            ReadFile_onClickLoadOrReloadFile();
+            ReadFile_onClickLoadOrReloadFile(_logicLayer.FilePath);
         }
     }
 }
