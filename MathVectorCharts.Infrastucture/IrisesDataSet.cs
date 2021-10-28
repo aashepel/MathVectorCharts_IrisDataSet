@@ -60,7 +60,10 @@ namespace MathVectorCharts
         {
             foreach (var iris in irises)
             {
-                Add(iris);
+                if (iris != null)
+                {
+                    Add(iris);
+                }
             }
         }
 

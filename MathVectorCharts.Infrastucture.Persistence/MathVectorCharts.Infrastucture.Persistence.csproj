@@ -44,8 +44,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parsers.cs" />
+    <Compile Include="Interfaces\IJsonParser.cs" />
+    <Compile Include="Parsers\BaseParser.cs" />
+    <Compile Include="Parsers\CsvParser.cs" />
+    <Compile Include="Parsers\DefaultParsers.cs" />
+    <Compile Include="Interfaces\ICsvParser.cs" />
+    <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="CsvIrisMapping.cs" />
+    <Compile Include="Parsers\JsonParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

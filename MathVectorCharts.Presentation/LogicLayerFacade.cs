@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using TinyCsvParser;
-using MathVectorCharts.Domain.Entities;
+﻿using MathVectorCharts.Domain.Entities;
 using MathVectorCharts.Infrastucture.Persistence;
+using MathVectorCharts.Infrastucture.Persistence.Interfaces;
+using MathVectorCharts.Infrastucture.Persistence.Parsers;
 
 namespace MathVectorCharts.Presentation
 {
@@ -11,22 +11,22 @@ namespace MathVectorCharts.Presentation
         /// Дата-сет ирисов
         /// </summary>
         private IrisesDataSet _dataSet;
-        private IParser<Iris> _csvParser;
+        private ICsvParser<Iris> _csvParser;
+        private string _filePath;
 
         /// <summary>
         /// Конструктор
         /// </summary>
         public LogicLayerFacade(string filePath)
         {
+            _filePath = filePath;
             _dataSet = new IrisesDataSet();
-            _csvParser = new Infrastucture.Persistence.CsvParser<Iris>
-                (new CsvParserOptions(true, ','), new CsvIrisMapping(), filePath);
         }
 
         public string FilePath
         {
-            get { return _csvParser.FilePath; }
-            set { _csvParser.FilePath = value; }
+            get { return _filePath; }
+            set { _filePath = value; }
         }
 
         /// <summary>
@@ -37,6 +37,11 @@ namespace MathVectorCharts.Presentation
             get { return _dataSet; }
             set { _dataSet = value; }
         }
+
+        public ICsvParser<Iris> Parser
+        {
+            get { return _csvParser; }
+        }
         /// <summary>
         /// Сброс состояния класса логики
         /// </summary>
@@ -45,8 +50,9 @@ namespace MathVectorCharts.Presentation
             _dataSet.Clear();
         }
 
-        public void ReadFile()
+        public void Parse()
         {
+            _csvParser = DefaultParsers.CsvParserDefault(new CsvIrisMapping(), _filePath);
             _dataSet.AddRange(_csvParser.GetRecords());
         }
     }

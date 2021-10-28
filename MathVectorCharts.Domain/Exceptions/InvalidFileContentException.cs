@@ -8,15 +8,11 @@ namespace MathVectorCharts.Domain.Exceptions
 {
     public class InvalidFileContentException : BaseMathVectorChartsException
     {
-        public InvalidFileContentException()
+        public InvalidFileContentException(string message = _description) : base(message)
         {
 
         }
-        public InvalidFileContentException(string description)
-        {
-            _description = description;
-        }
-        private string _description = "Данные в файле повреждены или имеют неверный формат";
+        private const string _description = "Данные в файле повреждены или имеют неверный формат";
         public override string Description
         { 
             get { return _description; }

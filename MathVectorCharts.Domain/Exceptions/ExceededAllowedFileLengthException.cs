@@ -13,5 +13,9 @@ namespace MathVectorCharts.Domain.Exceptions
         {
             get { return _descritpion; }
         }
+        public ExceededAllowedFileLengthException(string message = _descritpion) : base(message)
+        {
+
+        }
     }
 }

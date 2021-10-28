@@ -20,16 +20,6 @@ namespace MathVectorCharts.Domain.Entities
         private string _typeIris;
 
         /// <summary>
-        /// Допустимые значения параметров ириса
-        /// </summary>
-        private static List<string> _possibleNameOfParams = new List<string> { "sepal_length", "sepal_width", "petal_length", "petal_width", "species" };
-
-        /// <summary>
-        /// Допустимые типы ирисов (поле не используется)
-        /// </summary>
-        private static List<string> _possibleTypesIrises = new List<string> { "setosa", "versicolor", "virginica" };
-
-        /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="vectorParams">Вектор параметров</param>
@@ -43,22 +33,6 @@ namespace MathVectorCharts.Domain.Entities
         public Iris()
         {
             _vectorParams = new MathVector(4);
-        }
-
-        /// <summary>
-        /// Допустимые значения параметров ириса (используется при проверке файла)
-        /// </summary>
-        public static List<string> PossibleNameOfParams
-        { 
-            get { return _possibleNameOfParams; }
-        }
-
-        /// <summary>
-        /// Допустимые типы ирисов (поле не используется)
-        /// </summary>
-        public static List<string> PossibleTypesIrises
-        {
-            get {  return _possibleTypesIrises;}
         }
 
         /// <summary>

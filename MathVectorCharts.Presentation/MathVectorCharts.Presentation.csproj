@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6ADCAEE0-95B2-4904-A7E8-F58CCEEA8970}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MathVectorCharts</RootNamespace>
+    <RootNamespace>MathVectorCharts.Presentation</RootNamespace>
     <AssemblyName>MathVectorCharts</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -84,6 +84,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

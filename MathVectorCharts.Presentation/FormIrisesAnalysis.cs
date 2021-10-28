@@ -16,7 +16,7 @@ namespace MathVectorCharts.Presentation
 {
     public partial class FormIrisesAnalysis : Form
     {
-        private LogicLayerFacade _logicLayer;
+        private LogicLayerFacade _logicLayerFacade;
         private List<Chart> _barCharts = new List<Chart>();
         public FormIrisesAnalysis()
         {
@@ -77,7 +77,7 @@ namespace MathVectorCharts.Presentation
         private void ResetStateProgram()
         {
             ClearAllCharts();
-            _logicLayer.Reset();
+            _logicLayerFacade.Reset();
             ResetLabelFilePath();
             button_openGridView.Enabled = false;
             button_openNotepad.Enabled = false;
@@ -103,9 +103,9 @@ namespace MathVectorCharts.Presentation
         {
             try
             {
-                _logicLayer = new LogicLayerFacade(filePath);
-                _logicLayer.ReadFile();
-                label_pathFile.Text = $"Путь к файлу: {_logicLayer.FilePath}";
+                _logicLayerFacade = new LogicLayerFacade(filePath);
+                _logicLayerFacade.Parse();
+                label_pathFile.Text = $"Путь к файлу: {_logicLayerFacade.FilePath}";
                 ShowMessageWindow("Чтение файла выполнено успешно", MessageBoxIcon.Information);
                 RenderCharts();
                 button_openGridView.Enabled = true;
@@ -113,8 +113,8 @@ namespace MathVectorCharts.Presentation
             catch (BaseMathVectorChartsException ex)
             {
                 ShowMessageWindow(ex.Description, MessageBoxIcon.Error);
-                label_pathFile.Text = $"Файл был загружен с ошибками. Путь к файлу: {_logicLayer.FilePath}";
-                _logicLayer.Reset();
+                label_pathFile.Text = $"Файл был загружен с ошибками. Путь к файлу: {_logicLayerFacade?.FilePath}";
+                _logicLayerFacade?.Reset();
                 button_openGridView.Enabled = false;
                 ClearAllCharts();
             }
@@ -163,7 +163,7 @@ namespace MathVectorCharts.Presentation
             // Очищаем заголовок текущей диаграммы
             chart.Titles.Clear();
             // Добавляем заголовок диаграммы. Значение берем из статического свойства получения допустимых свойств ирисов
-            chart.Titles.Add(Iris.PossibleNameOfParams[i]);
+            chart.Titles.Add(_logicLayerFacade.Parser.Headers[i]);
             // Убираем ось X
             chart.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
             // Включаем 3D
@@ -176,7 +176,7 @@ namespace MathVectorCharts.Presentation
             chart.Legends.Clear();
             for (int j = 0; j < typesIrises.Count; j++)
             {
-                ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
+                ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayerFacade.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == typesIrises[j]);
                 RenderConcreteBarOfChart(chart, i, concreteTypeIrisDataSet);
             }
         }
@@ -188,7 +188,7 @@ namespace MathVectorCharts.Presentation
         {
             ClearAllCharts();
             // Получаем уникальный список ирисов из дата-сетов
-            List<string> typesIrises = new List<string>(_logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.Select(p => p.Type));
+            List<string> typesIrises = new List<string>(_logicLayerFacade.DataSet.ArrayConcreteTypeIrisDataSet.Select(p => p.Type));
             // Делаем цикл для заполнения всех столбчатых диаграмм
             for (int i = 0; i < _barCharts.Count; i++)
             {
@@ -201,7 +201,7 @@ namespace MathVectorCharts.Presentation
             foreach(var type in typesIrises)
             {
                 // Получаем конкретный дата-сет ирисов одного типа
-                ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayer.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == type);
+                ConcreteTypeIrisDataSet concreteTypeIrisDataSet = _logicLayerFacade.DataSet.ArrayConcreteTypeIrisDataSet.FirstOrDefault(p => p.Type == type);
                 // Если такой дата-сет существует
                 if (concreteTypeIrisDataSet != null)
                 {
@@ -258,7 +258,7 @@ namespace MathVectorCharts.Presentation
 
         private void button_openGridView_Click(object sender, EventArgs e)
         {
-            //List<string> lines = new List<string>(_logicLayer.LinesFile);
+            //List<string> lines = new List<string>(_logicLayerFacade);
             //List<string> columns = new List<string>(lines[0].Split(','));
             //List<List<string>> rows = new List<List<string>>();
             //lines.RemoveAt(0);
@@ -272,12 +272,12 @@ namespace MathVectorCharts.Presentation
 
         private void button_openNotepad_Click(object sender, EventArgs e)
         {
-            Process.Start("C:\\Windows\\System32\\notepad.exe", _logicLayer.FilePath);
+            Process.Start("C:\\Windows\\System32\\notepad.exe", _logicLayerFacade.FilePath);
         }
 
         private void button_reloadFile_Click(object sender, EventArgs e)
         {
-            ReadFile_onClickLoadOrReloadFile(_logicLayer.FilePath);
+            ReadFile_onClickLoadOrReloadFile(_logicLayerFacade.FilePath);
         }
     }
 }

@@ -13,5 +13,9 @@ namespace MathVectorCharts.Domain.Exceptions
         {
             get { return _description; }
         }
+        public ImpossibleCalculateMeanVectorException(string message = _description) : base(message)
+        {
+
+        }
     }
 }
